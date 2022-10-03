@@ -1,0 +1,195 @@
+___________________________________________________________________________
+###########################################################################
+===========================================================================
+  CONFIGURAR EL PATH Y CAMBIAR DE VERSION DE JAVA
+################################# INICIO ##################################
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: CONFIGURAR AND INSTALL JDK 11 AND 17
+1.Intalar los paquetes segun la version q deseemos, pero tipo .deb
+
+sudo dpkg -i "jdk_nombre_version.deb"
+sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk-14/bin/java 1
+sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk-14/bin/javac 1
+sudo update-alternatives --config java
+sudo update-alternatives --config javac
+java --version
+javac --version
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: CONFIGURAR AND INSTALL JDK 8
+1- Download jdk 8, descomprimir 
+tar -xzvf jdk_8.tar.gz
+
+2- Mover la carpeta a /opt/
+3- sudo chmod -R 777 /opt/jdk1.8
+4- Confgurar para q lo reconosca
+sudo update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_202/bin/java 3
+sudo update-alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_202/bin/javac 3
+sudo update-alternatives --config java
+sudo update-alternatives --config javac
+java -version
+javac -version
+
+############################################################### FIN #######
+
+
+___________________________________________________________________________
+###########################################################################
+ CONFIGURAR JAVA-GENERAL-MAVEN
+################################# INICIO ##################################
+
+DESCRIPTION: CONFIGURAR JAVA.SH
+1- Configurar ~/.profile
+# CONFIGURACION DE JAVA
+export JAVA_HOME=/usr/lib/jvm/jdk-11
+#export JAVA_HOME=/opt/jdk1.8.0_202
+#export JAVA_HOME=/usr/lib/jvm/jdk-17
+export PATH=$JAVA_HOME/bin:$PATH
+
+2- Creamos el archivo en /etc/profile.d/
+sudo nvim /etc/profile.d/java.sh
+----
+JAVA_HOME=/usr/lib/jvm/jdk-11
+#JAVA_HOME=/usr/lib/jvm/jdk-17
+#JAVA_HOME=/opt/jdk1.8.0_202
+export JAVA_HOME
+PATH=${JAVA_HOME}/bin:${PATH}
+export PATH
+JRE_HOME=/usr/lib/jvm/jre
+export JRE_HOME
+JAVA_OPTS="-XX:+AggressiveOpts -Xms256m -Xmx512m -XX:MaxPermSize=256m -XX:+DisableExplicitGC"
+export JAVA_OPTS
+----
+
+3- Damos los permisos
+sudo chmod +x /etc/profile.d/java.sh
+
+4- verificamos q este en comentario la version de java q no use
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: INSTALL MAVEN
+GUIA: https://linuxize.com/post/how-to-install-apache-maven-on-ubuntu-20-04/
+
+1-  Descargar maven de su pagina oficial la extension, 
+    Buscamos: maven2 dowload y descargamos apache-maven-3.8.5-bin.tar.gz
+
+2- sudo tar xf ~/Downloads/apache-maven-3.8.5-bin.tar.gz -C /opt
+
+3- sudo ln -s /opt/apache-maven-3.8.5 /opt/maven
+
+4- sudo nvim /etc/profile.d/maven.sh
+
+----
+export JAVA_HOME=/usr/lib/jvm/jdk-11
+#export JAVA_HOME=/usr/lib/jvm/jdk-17
+#export JAVA_HOME=/opt/jdk1.8.0_202
+export M2_HOME=/opt/maven
+export MAVEN_HOME=/opt/maven
+export PATH=${M2_HOME}/bin:${PATH}
+----
+
+5- sudo chmod +x /etc/profile.d/maven.sh
+    source /etc/profile.d/maven.sh
+
+6- mvn -version
+
+7- Agregamos en ~/.profile
+alias maven='source /etc/profile.d/maven.sh && mvn -version'
+
+/* 
+DATO: siempre hay q source para q funcione, por esto agregamos al .profile
+source /etc/profile.d/maven.sh
+mvn -version
+*/
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: USO DE MAVEN POR TERMINAL
+guia: http://www.chuidiang.org/java/herramientas/maven.php
+#EXAMPLE GENERAL
+Abrir una terminal en la carpeta y ejecutar:
+  *Reemplazar lucasmufato por su nombre y apellido
+----
+mvn -B archetype:generate \
+-DarchetypeGroupId=org.apache.maven.archetypes \
+-DgroupId=com.lucasmufato.prueba \
+-DartifactId=my-prueba
+----
+
+1ER FORMA:
+1 - creamos un java normal, no un web
+----
+mvn archetype:generate \
+-DgroupId=chuidiang.ejemplos \
+-DartifactId=EjemploMaven
+----
+# ESTRUCTURA
+EjemploMaven
++---src
+¦    +---main
+¦    ¦   +---java         //Para nuestros fuentes
+¦    ¦       +---chuidiang
+¦    ¦           +---ejemplos
+¦    ¦               +---App.java
+¦    +---test
+¦        +---java         //Para test de Junit
+¦            +---chuidiang
+¦                +---ejemplos
+¦                    +---AppTest.java
++---pom.xml
+
+# COMPILAR
+#Una vez que tenemos todo, podemos compiliar de forma sencilla. 
+#Basta ponerse en el directorio donde está el fichero pom.xml y escribir
+$ mvn compile
+
+#GENERAR JAR
+$ mvn package
+#Esto primero compilará si es necesario, pasará las clases de test de JUnit 
+#y si no hay fallos, meterá en el directorio target nuestro jar,
+#que por defecto tendrá un nombre tan feo como este
+EjemploMaven-1.0-SNAPSHOT.jar
+
+#INTEGRACION CON LOS IDE
+/*
+Debemos de definir una variable M2_REPO apuntando a nuestro repositorio
+local de maven
+*/
+mvn eclipse:eclipse
+mvn idea:idea
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION : 2DA FORMA
+1.-Creando un filtro para la creación del archetype
+mvn archetype:generate -Dfilter=maven-archetype-quickstart
+# (ENTER)
+# (8)
+
+2- Configuracion de nuestro proyecto
+Define value property 'groupId':         (com.example.example)
+Define value property 'artiactId':       (name-proyect)
+Define value property 'version':         (1.0.0)
+Define value property 'package'#(enter): (jar-2da_opcion)
+Pide confirmar si todo esta bien
+Y: :       (Y)
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+RESUMEN DE MAVEN TERMINAL
+# Remueve los .class generados (si existen), descargará las librerías según lo que se haya definido en las dependencias del pom.xml
+$ mvn clean
+
+# Compila nuestro código. De los .java genera los .class.
+$ mvn compile
+
+# Compila las pruebas.
+mvn test-compile
+
+# Ejecuta las pruebas.
+$ mvn test
+
+# Genera los archivos jar o war, según lo que se haya definido en el pom.xml
+$ mvn install
+
+
+
+############################################################## FIN ########
