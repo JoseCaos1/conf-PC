@@ -1,4 +1,3 @@
-
 {
   "languageserver": {
     "go": {
@@ -90,7 +89,7 @@
   //"prettier.configPath": "~/.prettierrc",
 
   //EMMET
-  "emmet.excludeLanguages": ["css", "javascript"],
+  "emmet.excludeLanguages": ["css","scss", "javascript"],
   "emmet.includeLanguages": {
     "htmldjango": "html",
     "javascript": "javascriptreact"
