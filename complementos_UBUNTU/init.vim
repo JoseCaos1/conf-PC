@@ -22,6 +22,7 @@ set clipboard=unnamedplus
 set encoding=UTF-8
 set cursorline
 set relativenumber
+set ttyfast
 set showcmd
 set ruler
 set laststatus=2
@@ -39,8 +40,8 @@ set colorcolumn=80
 set splitbelow
 set splitright
 
-set foldmethod=syntax
-"set foldmethod=indent
+"set foldmethod=syntax
+set foldmethod=indent
 set nofoldenable        "dont fold by default
 
 "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -70,6 +71,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-telescope/telescope-media-files.nvim'
 Plug 'dhruvasagar/vim-dotoo'
 
 "Tmux
@@ -110,7 +112,6 @@ Plug 'tpope/vim-surround'  "Para envolver una palabra en un signo, corchete, par
 "Para dar iconos a nuestros nvim
 "Para reemplazar alguna palabra,  :%s/palbra antigua/palabra nueva
 Plug 'tmhedberg/simpylfold' "plegado de codigo
-Plug 'ryanoasis/vim-devicons'
 Plug 'vim-scripts/TaskList.vim'
 "todoshow para vim, todo,fixme en mayuscula
 "funciona con <leader> t  #salir q, mantener ventana y volver a pantalla e
@@ -327,6 +328,9 @@ let g:airline#extensions#default#layout = [
 "TODO: COC NVIM
 "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ":Prettier    "usaremos para formatear el buffer actual
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
+let g:prettier#autoformat_config_present = 1
 set nobackup
 set nowritebackup
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
@@ -514,12 +518,21 @@ nnoremap <leader>fg <cmd>Telescope live_grep prompt_prefix=🔍<cr>
 "sudo apt  install ripgrep
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fm <cmd>Telescope media_files<cr>
+"sudo apt install fd-find
+"ln -s $(which fdfind) ~/.local/bin/fd
+"pip3 install ueberzug            #recomendar instalar de ueberzug.deb
+"#dowload:   http://ftp.de.debian.org/debian/pool/main/u/ueberzug/ueberzug_18.1.9-2+b1_amd64.deb
+"sudo dpkg -i ueberzug && sudo apt install -y
+"pip3 install pillow-simd
+"pip3 uninstall -y pillow
 
 " Using Lua functions
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <leader>fm <cmd>lua require('telescope').extensions.media_files.media_files()<cr>
 
 "GIT TELESCOPE
 nnoremap <leader>gs <cmd>Telescope git_status<cr>
@@ -531,8 +544,21 @@ nnoremap <leader>gb <cmd>Telescope git_branches<cr>
 "Opciones extras
 nnoremap <leader>ft <cmd>Telescope colorscheme <cr>
 nnoremap <leader>fc <cmd>Telescope command_history<cr>
-nnoremap <leader>fm <cmd>Telescope marks<cr>
+"nnoremap <leader>fm <cmd>Telescope marks<cr>
 nnoremap <leader>fk <cmd>Telescope keymaps<cr>
+lua << EOF
+require("telescope").setup()
+require'telescope'.setup {
+  extensions = {
+    media_files = {
+      -- filetypes whitelist
+      -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+      filetypes = {"png", "webp", "jpg", "jpeg"},
+      find_cmd = "rg" -- find command (defaults to `fd`)
+    }
+  },
+}
+EOF
 
 
 "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -738,5 +764,8 @@ augroup NeoformatAutoFormat
                                                             \--trailing-comma\ es5
     autocmd BufWritePre *.ts,*.js,*.jsx Neoformat
 augroup END
-
+"'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+"TODO: COC- CSS(SASS)
+"'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+autocmd FileType scss setl iskeyword+=@-@
 "############################################################## FIN ########
