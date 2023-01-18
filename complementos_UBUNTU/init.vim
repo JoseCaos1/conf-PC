@@ -281,6 +281,10 @@ nnoremap <Leader>e :e ~/.config/nvim/init.vim<CR>
 nmap <F5> :source ~/.config/nvim/init.vim<CR>
 vmap <F5> :source ~/.config/nvim/init.vim<CR>
 
+"Mostrar el peso de la carpeta actual
+nnoremap <Leader>h :TerminatorRunAltCmd du -csh && du -hs *<CR>
+nnoremap <Leader>hh :TerminatorRunAltCmd du -csh && du -h --max-depth=1 <CR>
+
 
 "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 "TODO: CONFIGURAR HTML IDENTACION
