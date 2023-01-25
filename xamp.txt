@@ -1,5 +1,5 @@
 -------------------------------------
-#Error con Apache al ejecutar, y luego 
+#Error con Apache al ejecutar, y luego
 #volver a ejecutar xampp
 sudo /etc/init.d/apache2 stop
 
@@ -19,9 +19,23 @@ sudo chmod -R 777 htdocs
 http://localhost/phpmyadmin/
 
 -------------------------------------
-#ERROR: /opt/lampp/share/xampp/xampplib: 
+#ERROR: /opt/lampp/share/xampp/xampplib:
 #line 22: netstat: command not found
 #ok.
 sudo apt install net-tools
+
+-------------------------------------
+#Error no se activa mysql en Xamp
+#1- Deebmos ver q servicio esta ejecutandose, en mi caso es mysql
+sudo service mysql status
+sudo service mysql stop
+sudo /opt/lampp/lampp restart
+sudo /opt/lampp/lampp status
+
+#2- Segundo verificar en caso tengamos otra contra en la siguiente carpeta
+/opt/lampp/phpmyadmin/config.inc.php
+#verficar cual es la contraseña
+$cfg['Servers'][$i]['password'] = '';
+$cfg['Servers'][$i]['password'] = 'vasquez';
 
 -------------------------------------
