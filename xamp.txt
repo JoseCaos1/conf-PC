@@ -43,4 +43,11 @@ $cfg['Servers'][$i]['password'] = 'vasquez';
 # luego solo ponemos esto en la url de google
 localhost/Nombre_Carpeta/archivo.php
 
+# Para ejecutar en tiempo real necesitamos instalar live-sever en el buscador
+luego de instalar ejecutarlo en el buscador(firefox)
+Live reload
+
+Actual Server Address #copiamos la direccion de la carpeta de php
+Live Server Address   #pegamos la direccion de http://127.0.0.1:8080
+
 -------------------------------------
