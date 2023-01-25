@@ -39,3 +39,8 @@ $cfg['Servers'][$i]['password'] = '';
 $cfg['Servers'][$i]['password'] = 'vasquez';
 
 -------------------------------------
+#Para ejecutar un archivo php, debemos ver q este ejecutandose xamp
+# luego solo ponemos esto en la url de google
+localhost/Nombre_Carpeta/archivo.php
+
+-------------------------------------
