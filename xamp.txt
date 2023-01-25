@@ -43,11 +43,21 @@ $cfg['Servers'][$i]['password'] = 'vasquez';
 # luego solo ponemos esto en la url de google
 localhost/Nombre_Carpeta/archivo.php
 
+#Ejecutar php viene incluido un servidor incluido
+php -S localhost:5000 Nombre_Carpeta/archivo
+
 # Para ejecutar en tiempo real necesitamos instalar live-sever en el buscador
-luego de instalar ejecutarlo en el buscador(firefox)
-Live reload
+#luego de instalar ejecutarlo en el buscador(firefox)
+#Live reload
 
-Actual Server Address #copiamos la direccion de la carpeta de php
-Live Server Address   #pegamos la direccion de http://127.0.0.1:8080
+#Esta opcion no me funciono :"(
+#Actual Server Address #copiamos la direccion de la carpeta de php
+#Live Server Address   #pegamos la direccion de http://127.0.0.1:8080
 
+#Para q funcione en php, tampoco me funciono
+install node.js
+npm install -g browser-sync
+browser-sync start --proxy "localhost" --files "*.php"
+#browser-sync start --proxy localhost/Nombre_Carpeta "index.php"
+browser-sync start --proxy localhost/ "index.php"
 -------------------------------------
