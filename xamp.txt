@@ -43,7 +43,7 @@ $cfg['Servers'][$i]['password'] = 'vasquez';
 # luego solo ponemos esto en la url de google
 localhost/Nombre_Carpeta/archivo.php
 
-#Ejecutar php viene incluido un servidor incluido
+#Ejecutar php viene incluido un servidor incluido #RECOMENDADO
 php -S localhost:5000 Nombre_Carpeta/archivo
 
 # Para ejecutar en tiempo real necesitamos instalar live-sever en el buscador
