@@ -41,9 +41,9 @@ $cfg['Servers'][$i]['password'] = 'vasquez';
 -------------------------------------
 #Para ejecutar un archivo php, debemos ver q este ejecutandose xamp
 # luego solo ponemos esto en la url de google
-localhost/Nombre_Carpeta/archivo.php
+localhost/Nombre_Carpeta/archivo.php         #RECOMENDADO
 
-#Ejecutar php viene incluido un servidor incluido #RECOMENDADO
+#Ejecutar php viene incluido un servidor incluido
 php -S localhost:5000 Nombre_Carpeta/archivo
 
 # Para ejecutar en tiempo real necesitamos instalar live-sever en el buscador
