@@ -9,4 +9,21 @@ description: acceso -Password: $3GundoPlan321
   1.Digitaremos por la terminal, con nuestra contraseña
   sqlcmd -S localhost -U SA -P '<YourPassword>'
 
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+description: Install en ubuntu 22.04
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+1. install sql server 2019
+sudo docker pull mcr.microsoft.com/mssql/server:2019-latest
+
+2.Create contenedor en docker,No olvide cambiar <YourStrong@Password> con su propia contraseña. Lea los requisitos de complejidad de la contraseña
+sudo docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=<YourStrong@Passw0rd>" \
+   -p 1433:1433 --name sql1 --hostname sql1 \
+   -d \
+   mcr.microsoft.com/mssql/server:2019-latest
+
+3. sudo docker ps -a
+
+4.conectar a Azure Data Studio
+Haga clic en Crear una conexión y luego ingrese los detalles de SQL Server
+
 ############################################################### FIN #######
