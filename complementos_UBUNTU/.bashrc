@@ -57,8 +57,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='\[\e[0;1;2;38;5;172m\]\u\[\e[0;1;2;38;5;39m\]@\[\e[0;1;2;38;5;39m\]\H\[\e[0;1;38;5;172m\]:\[\e[0;1;38;5;40m\]\w \[\e[0;1;38;5;172m\]$\[\e[0m\]'
-    #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -94,11 +93,12 @@ alias la='ls -A'
 alias l='ls -CF'
 alias venv='source venv/bin/activate'
 alias runflutter='flutter run --no-sound-null-safety'
-alias vim='nvim'
+alias vi='nvim'
 alias tree='tree -L 2'
 alias py='python3'
 alias designer='./venv/lib/python3.9/site-packages/qt6_applications/Qt/bin/designer'
 alias maven='source /etc/profile.d/maven.sh && mvn -version'
+alias ex='exit'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -124,6 +124,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
+
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -139,7 +141,7 @@ unset color_prompt force_color_prompt
 
 
 #configurar Python
-PYTHONPATH=$HOME/lib/python
+PYTHONPATH=$HOME/lib/python3
 EDITOR=nvim
 EDITOR=vim
 
@@ -149,3 +151,11 @@ export PYTHONPATH EDITOR
 #sudo ln -s /usr/bin/python3.10 /usr/bin/python
 ## luego verificamos
 #whereis python
+
+#CONFIGURACION DE ORACLE DATABASE
+export ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe
+export ORACLE_SID=XE
+export NLS_LANG=`$ORACLE_HOME/bin/nls_lang.sh`
+export ORACLE_BASE=/u01/app/oracle
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH
+export PATH=$ORACLE_HOME/bin:$PATH
