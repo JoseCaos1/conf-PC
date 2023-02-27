@@ -1,3 +1,6 @@
+GUIA:
+https://flotadigital.com/club/tutoriales/ubuntu/instalar-oracle-11g-en-ubuntu-20-04/
+
 PASOS DE INSTALACION DE SQL ORACLE EN UBUNTU
 
 Requisitos:
