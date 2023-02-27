@@ -121,3 +121,11 @@ sudo service oracle-xe restart
 sqlplus sys as sysdba
 
 
+#PARA INICIAR EN ORACLE SQL DEVELOPER
+username: sys           role: SYSDBA
+password: $3Gundoplan321
+hostname:localhost
+port: 1521
+SID: xe
+
+#luego probamos en test
