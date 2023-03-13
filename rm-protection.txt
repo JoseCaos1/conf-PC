@@ -1,0 +1,7 @@
+sudo pip install rm-protection
+
+#Para ello basta con hacer lo siguiente:
+
+    protect archivo.txt
+    protect -R carpeta/
+

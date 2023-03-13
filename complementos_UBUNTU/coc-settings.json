@@ -1,3 +1,4 @@
+
 {
   "languageserver": {
     "go": {
@@ -69,6 +70,8 @@
   "snippets.snipmate.enable": true,
   //Prettier
   "prettier.enable": true,
+  "prettier.configPath": "~/.prettierrc",
+    "prettier.requireConfig": true,
   "coc.preferences.formatOnSaveFiletypes": [
     "css",
     "scss",
@@ -86,7 +89,6 @@
     "json"
   ],
   //"prettier.documentSelectors": ["**/*.abc"],
-  //"prettier.configPath": "~/.prettierrc",
 
   //EMMET
   "emmet.excludeLanguages": ["css","scss", "javascript"],
@@ -305,5 +307,6 @@
     "htmldjango",
     "typescriptreact",
     "javascriptreact"
-  ]
+  ],
+  "snippets.ultisnips.pythonPrompt": false
 }

@@ -1,4 +1,13 @@
 {
+    "php": {
+        "prefix": "php",
+        "body": [
+            "<?php",
+            "$1",
+            "?>"
+        ],
+        "description": "Constructor"
+    },
     "_c": {
         "prefix": "_c",
         "body": [

@@ -1,0 +1,4 @@
+Al exportar datos de mysql y tratar de importarlos en mariadb no da el siguiente error:
+# 1273 - Intercalación desconocida: 'utf8mb4_0900_ai_ci '"
+#SOLUCION ES ESTA
+reemplazar la cadena “ utf8mb4_0900_ai_ci ” y la reemplacé con “ utf8mb4_general_ci ”
