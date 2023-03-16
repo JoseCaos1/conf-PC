@@ -1,4 +1,3 @@
-
 {
   "languageserver": {
     "go": {
@@ -8,7 +7,6 @@
       "filetypes": ["go"]
     }
   },
-  //JEDI - PYHTON
   "jedi.enable": true,
   "jedi.startupMessage": false,
   "jedi.markupKindPreferred": "plaintext",
@@ -40,7 +38,6 @@
     "__pycache__",
     "venv"
   ],
-  //JAVA
   "java.configuration.runtimes": [
     {
       "name": "JavaSE-11",
@@ -51,12 +48,10 @@
       "path": "/usr/lib/jvm/jdk-17"
     }
   ],
-  //HTML
   "html.autoClosingTags": true,
   "html.hover.documentation": false,
   "html.format.templating": true,
   "html.format.indentInnerHtml": true,
-  //SNIPETS
   "snippets.priority": 1,
   "snippets.userSnippetsDirectory": "~/.config/nvim/snippets/ultisnips",
   "snippets.shortcut": "S",
@@ -68,12 +63,27 @@
   "snippets.ultisnips.usePythonx": true,
   "snippets.ultisnips.directories": ["UltiSnips"],
   "snippets.snipmate.enable": true,
-  //Prettier
   "prettier.enable": true,
-  "prettier.configPath": "~/.prettierrc",
-    "prettier.requireConfig": true,
+  "prettier.arrowParens": "always",
+  "prettier.bracketSameLine":false,
+  "prettier.bracketSpacing": true,
+  "prettier.embeddedLanguageFormatting": "auto",
+  "prettier.htmlWhitespaceSensitivity": "css",
+  "prettier.insertPragma": false,
+  "prettier.jsxSingleQuote": false,
+  "prettier.printWidth": 80,
+  "prettier.proseWrap": "preserve",
+  "prettier.quoteProps": "as-needed",
+  "prettier.requirePragma": false,
+  "prettier.semi": true,
+  "prettier.singleQuote": false,
+  "prettier.singleAttributePerLine": false,
+  "prettier.tabWidth": 2,
+  "prettier.trailingComma": "es5",
+  "prettier.useTabs": true,
+  "prettier.vueIndentScriptAndStyle": false,
   "coc.preferences.formatOnSaveFiletypes": [
-    "css",
+        "css",
     "scss",
     "dart",
     "java",
@@ -81,24 +91,19 @@
     "html",
     "python",
     "django",
-    "htmldjango",
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact",
-    "json"
+    "json",
+    "typescriptreact"
   ],
-  //"prettier.documentSelectors": ["**/*.abc"],
 
-  //EMMET
   "emmet.excludeLanguages": ["css","scss", "javascript"],
   "emmet.includeLanguages": {
     "htmldjango": "html",
     "javascript": "javascriptreact"
   },
-  //DJANGO
   "htmldjango.formatting.provider": ["htmldjango", "html"],
-  //ESLISNT
   "eslint.format.enable": true,
   "eslint.run": ["onType", "onSave"],
   "eslint.probe": [
@@ -117,7 +122,6 @@
     "htmldjango",
     "djhtml"
   ],
-  //ICONS
   "codeLens.enable": true,
   "diagnostic.errorSign": "✘",
   "diagnostic.warningSign": "",
@@ -151,12 +155,10 @@
     "event": "\ufacd", // 鬒clock alert / clock with exclamation mark
     "file": "\uf15b", //  file / blank page
     "folder": "\uf07b", //  folder
-    //"snippet": "\ue60b", //  pair of curly braces
     "snippet": " ",
     "typeParameter": "\uf728", //  file presentation box
     "default": "\uf29c" //  question mark in circle
   },
-  //LINTING ICONS
   "diagnostic.enable": true,
   "diagnostic.enableSign": true,
   "diagnostic.level": "error",
@@ -170,11 +172,7 @@
     "typescriptreact",
     "javascriptreact"
   ],
-  //EXPLORER
-  // coc-settings.json
-  // coc-settings.json
   "explorer.focus": true,
-  //"explorer.openAction.for.directory": "expandOrCollapse",
   "explorer.previewAction.onHover": false,
   "explorer.git.icon.status.added": "✚",
   "explorer.git.icon.status.deleted": "✖",
@@ -196,7 +194,7 @@
     "patternMatches": ["^\\.git$", "^\\node_modules$", "^\\plugged$"]
   },
   "explorer.keyMappings.global": {
-    "i": false, // cancel default mapkey
+    "i": false,
     "<c-o>": "noop",
 
     "1": "toggleSelection",
@@ -280,28 +278,13 @@
   "explorer.buffer.root.template": "[icon & 1] OPEN EDITORS",
   "explorer.file.child.template": "[git | 2] [selection | clip | 1] [indent][icon | 1] [diagnosticError & 1][filename omitCenter 1][modified][readonly] [linkIcon & 1][link growRight 1 omitCenter 5]",
 
-  //TABNINE
-  //"ignore_all_lsp": true,
-  "tabnine.disable_file_regex": [
-    "[.]md$",
-    "[.]html$",
-    "[.]txt$",
-    "[.]php$",
-    "[.]css$",
-    "[.]scss$",
-    "[.]dart$",
-    "[.]js$",
-    "[.]ts$",
-    "[.]java$"
-  ],
   "javascript.referencesCodeLens.enable": false,
   "typescript.referencesCodeLens.enable": false,
-  //Configuration CSS
   "cssmodules.camelCase": true,
   "cssmodules.hintName": " cssmodules ",
-  //CONFIGUTACION DE HTML CSS SUPPORT
   "html-css-support.enabledLanguages": [
-    "html",
+      "html",
+    "php",
     "vue",
     "blade",
     "htmldjango",
@@ -310,3 +293,4 @@
   ],
   "snippets.ultisnips.pythonPrompt": false
 }
+

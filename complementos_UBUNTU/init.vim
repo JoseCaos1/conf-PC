@@ -334,7 +334,9 @@ let g:airline#extensions#default#layout = [
 ":Prettier    "usaremos para formatear el buffer actual
 let g:prettier#autoformat = 1
 let g:prettier#autoformat_require_pragma = 0
-let g:prettier#autoformat_config_present = 1
+"let g:prettier#autoformat_config_present = 1
+let g:prettier#config#print_width = '80'
+let g:prettier#exec_cmd_path = "~/.prettierrc"
 set nobackup
 set nowritebackup
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
@@ -396,8 +398,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+"xmap <leader>f  <Plug>(coc-format-selected)
+"nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -773,3 +775,4 @@ augroup END
 "'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 autocmd FileType scss setl iskeyword+=@-@
 "############################################################## FIN ########
+
