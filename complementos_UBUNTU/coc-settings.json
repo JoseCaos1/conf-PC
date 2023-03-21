@@ -82,6 +82,7 @@
 	"prettier.useTabs": true,
 	"prettier.vueIndentScriptAndStyle": false,
 	"coc.preferences.formatOnSaveFiletypes": [
+		"blade",
 		"php",
 		"css",
 		"scss",
@@ -96,16 +97,12 @@
 		"json",
 		"typescriptreact"
 	],
-	"emmet.excludeLanguages": [
-		"css",
-		"scss",
-		"javascript"
-	],
+	"emmet.excludeLanguages": ["css", "scss", "javascript"],
 	"emmet.includeLanguages": {
 		"htmldjango": "html",
 		"blade": "html",
 		"blade.php": "html",
-		"php": "html",
+		"php": "html"
 	},
 	"htmldjango.formatting.provider": ["htmldjango", "html"],
 	"eslint.format.enable": true,
