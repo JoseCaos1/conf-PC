@@ -1,0 +1,15 @@
+#1er Paso: Instalar y descargar esta extension
+UltraSurf Security, Privacy & Unblock VPN
+
+#2do paso: Buscar carpeta y la descargamos para poder añadirla manualmente
+~/.config/google-chrome/Default/Extensions/mjnbclmflcpookeapghfhapeffmpodij
+
+#3er Paso: Copiar carpeta a una direccion y luego lo agregamos
+
+#4er Paso: Añadirla manualmente a google Chrome
+Entramos a Extensions, activamos Developer mode, Load unpacked(Cargar extension sin empaquetar)
+
+#5to Paso:
+Primero debemos de tener desactivado alguna bloqueador de anuncios,
+luego activamos la extension, y cuando empiece a descargar lo desactivamos
+y recien descargara rapido
