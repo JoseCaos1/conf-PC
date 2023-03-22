@@ -1,0 +1,118 @@
+___________________________________________________________________________
+###########################################################################
+ CURSO DE GIT
+################################# INICIO ##################################
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: CONFIGURACION BASICA
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#para ver nuestra configuracion general
+git config -l
+
+
+#Crear una clave ssh para vincularl con github
+ssh-keygen -t rsa -b 4096 -C "caoss2022@gmail.com"
+
+#Luego ir a la carpeta donde se guardan las claves   ~/.ssh
+En este archivo sera el q id_rsa.pub para conectar con github
+
+#Activar el puerto para q funcione el ssh
+eval $(ssh-agent -s)        #Agent pid 26414
+
+#Entrar a git hub
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION:GIT BASICO
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#Iniciar git
+git init
+
+#Agregar los cambios
+git add nombre_archivo  ||   git add .
+
+#Agregar un commit
+git commit -m "descripcion del cambio realizado"
+git commit -am "descripcion del cambio realizado"      #solo si ya estaba agregado el archivo
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION:VERN LOS CAMBIOS
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#Para ver los cambios q hicimos desde los commits
+git log nombre_archivo   ||  git log --stat
+
+#Para ver los cambios realizados en el archivo, alguna modificacion o descripcion detallada
+git show nombre_archivo  || git show
+
+#Para ver las cambios agregados y los recien modificados
+git diff
+
+#Para comparar los cambios echos en 2 commits
+#git log  #para ver el nro de commits
+git diff  nro_de_commits1 nro_de_commits2
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: PARA PODER CAMBIAR, POR ALGUNA ANTIGUO COMMIT O VOLVER AL MASTER
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#1er forma
+#Para volver en el tiempo en un commit
+git reset nro_de_commit_antiguo --hard    #Borra el historial despues de ese commit
+git reset nro_de_commit_antiguo --hard    #Mantiene el historial despues de ese commit
+
+#2da forma
+#Para volver a ver a un commit antiguo
+git checkout nro_de_commit_antiguo  nombre_archivo
+
+#Y si queremos volver a nuestro actual commit
+git checkout master nombre_archivo
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: RAMAS-BRANCH
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#Para crear una nueva rama
+git branch nombre_rama_a_crear
+
+#para cambiar a una rama diferente
+git checkout nombre_rama_a_cambiar
+
+#Para fusionar 2 ramas en un mismo equipo
+#Primero ubicarnos en la rama principal(main)
+git merge nombre_rama_diferente_para_fusionar
+
+#Solucionar conflicto en las ramas en un merge
+#Preguntar y consultar q codigo debe de mantenerse al final y luego
+#dejar lo ultimo y guardar y volver a hacer un merge
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: REMOTE
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#Para vincular nuestro git a uno remoto
+git remote add origin link_github.com
+
+#Para ver las conexiones remotes
+git remote   ||   git remote -v
+
+#Para subir nuestros commits a git remoto
+git push origin nombre_rama_a_subir rama_remota_github
+git push origin master
+
+#Hacer un solo paso de git fetch y git merge
+git pull nuestra_rama_remota rama_remota_github
+git pull origin master
+
+#Error Comun cuando creamos un nuevo remote y queremos fusionar con
+#nuestro git, es por q no hay conexion entre las historias de commits o logs
+git pull nuestra_rama_remota rama_remota_github --allow-unrelated-histories
+git pull origin master --allow-unrelated-histories
+
+
+
+
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: DATOS
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+git pull  =  git fetch && git merge
+
+############################################################## FIN ########
