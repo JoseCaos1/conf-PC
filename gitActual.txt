@@ -6,9 +6,13 @@ ___________________________________________________________________________
 DESCRIPTION: CONFIGURACION BASICA
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #para ver nuestra configuracion general
-git config -l
+$ git config -l
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
 
-
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: AGREGAR SSH
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #Crear una clave ssh para vincularl con github
 ssh-keygen -t rsa -b 4096 -C "caoss2022@gmail.com"
 
@@ -18,7 +22,12 @@ En este archivo sera el q id_rsa.pub para conectar con github
 #Activar el puerto para q funcione el ssh
 eval $(ssh-agent -s)        #Agent pid 26414
 
-#Entrar a git hub
+#Entrar a git hub y agregar ssh
+
+#Luego al vincular un remositorio q ya estaba conectado con https
+#cambiarlo por ssh
+git remote set-url nombre_remote_local link_github_shh
+git remote set-url origin git@github.com:JoseCaos1/conf-PC.git
 
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -86,7 +95,7 @@ git merge nombre_rama_diferente_para_fusionar
 DESCRIPTION: REMOTE
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #Para vincular nuestro git a uno remoto
-git remote add origin link_github.com
+git remote add origin link_github_https
 
 #Para ver las conexiones remotes
 git remote   ||   git remote -v
