@@ -10,6 +10,16 @@ $ git config -l
 $ git config --global user.name "John Doe"
 $ git config --global user.email johndoe@example.com
 
+#configurar comnados o abreviaciones para q ejecutar en git
+git config --global alias.nombre_abreviacion "codigo_de_git"
+git config --global alias.stats "git shortlog -sn -all -no-merges"     #despues ejecutar git stats
+git config --global alias.logAll "git log --all --graph --decorate --oneline"
+
+#Para ver todos los cambios echos en mi archivo
+git blame nombre_archivo    || git blame -c nombre_archivo
+git blame nombre_archivo -L35,53     #Para ver los cambios echos cierta linea de un archivo
+git blame nombre_archivo -L35,53 -c     #ver los cambios en las lineas con formato
+
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 DESCRIPTION: AGREGAR SSH
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -42,11 +52,19 @@ git add nombre_archivo  ||   git add .
 #Agregar un commit
 git commit -m "descripcion del cambio realizado"
 git commit -am "descripcion del cambio realizado"      #solo si ya estaba agregado el archivo
+
+#En caso nos equivoquemos al describir un commit , y renonbramos
+git commit --amend
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 DESCRIPTION:VERN LOS CAMBIOS
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #Para ver los cambios q hicimos desde los commits
 git log nombre_archivo   ||  git log --stat
+
+#Para ver los cambios mas comprimidos de los commits
+#Agregar a .bashrc
+#alias logAll= "git log --all --graph --decorate --oneline"
+git log --all --graph --decorate --oneline
 
 #Para ver los cambios realizados en el archivo, alguna modificacion o descripcion detallada
 git show nombre_archivo  || git show
@@ -57,6 +75,10 @@ git diff
 #Para comparar los cambios echos en 2 commits
 #git log  #para ver el nro de commits
 git diff  nro_de_commits1 nro_de_commits2
+
+#Para ver los cambios q hicieron los colaboradores en el proyecto
+git shortlog -sn    ||  git shortlog -sn --all
+git shortlog -sn -all -no-merges
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 DESCRIPTION: PARA PODER CAMBIAR, POR ALGUNA ANTIGUO COMMIT O VOLVER AL MASTER
@@ -90,7 +112,17 @@ git merge nombre_rama_diferente_para_fusionar
 #Preguntar y consultar q codigo debe de mantenerse al final y luego
 #dejar lo ultimo y guardar y volver a hacer un merge
 
+#Para subir una rama debemos ubicarnos en ella y luego
+git push origin nombre_rama_a_subir
 
+#Para eliminar una rama
+git branch -d rama_a_eliminar
+
+#Para ver las ramas remotas
+git branch -r
+
+#Para ver las todas las ramas locales y remotas
+git branch -a
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 DESCRIPTION: REMOTE
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -114,14 +146,124 @@ git pull nuestra_rama_remota rama_remota_github --allow-unrelated-histories
 git pull origin master --allow-unrelated-histories
 
 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: TAGS, son versiones para q puedan visualizarlo en github
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#Para cuantas tags tenemos, es decir cuantas versiones tenemos
+git tag
+
+#En caso si tengamos algun tag y queramos ver el nro de commit de este tag
+git show-ref --tags
+
+#Ver en q parte deseamos mostrar la version q deseamos agregar
+git log --all --graph --decorate --oneline
+
+#Luego copiamos el nro_de_commits
+git tag -a v0.1 -m "Descripcion del primer tag" nro_de_commit
+
+#Para subirlo el tag(version_del_proyecto) a github
+git pull origin master
+git push origin --tags
+
+#Para eliminar un tag
+git tag
+git tag -d nombre_tag_eliminar
+git pull origin master
+git push origin --tags
+git push origin :refs/tags/nombre_tag_eliminar
 
 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: git stash, funciona como un retrocezo
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#Guarda tu cambio ultimo y retrocede como estaba antes para q no pierdas tu cambio
+git stash
+
+#Para ver la lista de tus stash
+git stash list
+
+#Para poder volver a obtener tus cambios q habias guardado
+git stash pop
+
+#Para guardar los cambios en una rama diferente
+git stash
+git stash list
+git stash branch nombre_rama_a_guardar_stash
+
+#Para elimianar un stash
+git stash drop
 
 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: git rebase(NO RECOMENDADA)
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#Para eliminar una rama al unirlo a otra y no dejar rastro de esta
+#nos ubicarnos en la rama principal q se mantendra
+git rebase rama_a_fusionar
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: LIMPIAR ARCHIVOS NO DESEADOS
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#eliminar todo los cambios q hayamos realizado, siempre y cuando no lo
+#hayamos ignorado en el .gitignore
+git clean --dry-run
+git clean -f
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: AGREGAR SOLO UN COMMIT DE VARIOS A MI MASTER(NO RECOMENDADO)
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#si hemos guardado en otra rama varios commit y solo deseamos agregar uno de esos
+#entonces podemos agregarlo mediante
+git cherry-pick nro_de_commit
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: RESETEAR Y VOLVER CUANDO SE ROMPIO EL PROYECTO A UNA VERSION
+             ANTERIOR, SOLO CUADNO NO HAYA SOLUCION
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#para ver los heads y su codigo de commit para elegir
+git reflog
+git reset --hard nro_de_commit_q_funcionaba_bien_proyecto
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: BUSCAR PALABRAS EN EL ARCHIVO Y EN LOS COMMIT
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#En donde use la palabra en mi git
+git grep -n palabra_a_buscar      #en donde escribi esta palabra
+git grep -c palabra_a_buscar      #cuantas veces repite la palabra
+gip grep -n "<br>"                #si busco algun codigo
+
+#Para buscar palabras en los commits
+git log -S "parabra a buscar"
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: .gitignore
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#Para q git hub no suba archivos q no queramos podemos ignorarlos, creando un .gitignore
+#Se pone # para comentar
+---------------.gitignore------------------
+*.jpg                     #ignorar todo los jpgs
+node_modules/             #ignorar la carperta
+!/content/themes/theme1   #No ignores esto si hemos ignorardo antes la carpeta
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 DESCRIPTION: DATOS
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#git pull
+git fetch origin nombre_rama
+git merge origin/nombre_rama
+
+#Para eliminar una rama
+git branch -d rama_a_eliminar
 git pull  =  git fetch && git merge
 
 ############################################################## FIN ########
+
+
+LINK:
+CURSO DE PROFESIONAL DE GIT Y GITHUB
+5. Flujos de trabajo profesionales
+video 1, recien empiezo
