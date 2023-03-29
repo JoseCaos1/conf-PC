@@ -1,0 +1,26 @@
+{
+	"console log": {
+		"prefix": "cl",
+		"body": ["console.log($1);"],
+		"description": "console log"
+	},
+	"main": {
+		"prefix": "main",
+		"body": [
+			"<script>",
+			"export default{",
+			"name: '$1',",
+			"components:{",
+			"},",
+			"}",
+			"</script>",
+			"",
+			"<template>",
+			"</template>",
+			"",
+			"<style scoped>",
+			"</style>"
+		],
+		"description": "Base de estructura Basica de Vue js"
+	}
+}

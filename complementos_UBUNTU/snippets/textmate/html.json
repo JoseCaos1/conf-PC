@@ -1,4 +1,10 @@
 {
+	"cl": {
+		"prefix": "cl",
+		"body": ["console.log($1);"],
+		"description": "console log javascript",
+		"scope": "text.html"
+	},
 	"doctype": {
 		"prefix": "doctype",
 		"body": ["<!DOCTYPE>", "$1"],
