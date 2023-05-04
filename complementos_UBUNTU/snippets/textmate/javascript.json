@@ -1,4 +1,40 @@
 {
+	"function react": {
+		"prefix": "r:fn",
+		"body": [
+			"import React,{useState} from 'react';",
+			"",
+			"function $1(){",
+			"return(",
+			"<div className='$1'>",
+			"$2",
+			"</div>",
+			");",
+			"}",
+			"export default $1;"
+		],
+		"description": "Function basic reacr"
+	},
+	"class react": {
+		"prefix": "r:class",
+		"body": [
+			"import React,{useState} from 'react';",
+			"",
+			"class $1 extends React.Component{",
+			"constructor(props){",
+			"super(props);",
+			"this.state = {}",
+			"}",
+			"render(){",
+			"return (",
+			"$2",
+			");",
+			"}",
+			"}",
+			"export default $1;"
+		],
+		"description": "class basic reacr"
+	},
 	"Console Log": {
 		"prefix": "cl",
 		"body": "console.log($1);",
@@ -11,7 +47,7 @@
 	},
 	"Anonymous Function": {
 		"prefix": "fn",
-		"body": ["function() {", "  $2", "}"],
+		"body": ["function $1($2) {", "  $3", "}"],
 		"description": "Anonymous Function"
 	},
 	"Arrow Function": {
@@ -245,7 +281,11 @@
 	},
 	"jqBind": {
 		"prefix": "jqBind",
-		"body": ["$(${selector}).bind(${eventType}, function (e) {", "\t$0", "});"],
+		"body": [
+			"$(${selector}).bind(${eventType}, function (e) {",
+			"\t$0",
+			"});"
+		],
 		"description": "Attach a handler to an event for the elements."
 	},
 	"jqBindWithData": {
@@ -413,7 +453,11 @@
 	},
 	"jqFadeInFull": {
 		"prefix": "jqFadeInFull",
-		"body": ["$(${selector}).fadeIn(${duration}, function () {", "\t$0", "});"],
+		"body": [
+			"$(${selector}).fadeIn(${duration}, function () {",
+			"\t$0",
+			"});"
+		],
 		"description": "Display the matched elements by fading them to opaque."
 	},
 	"jqFadeOut": {
@@ -513,7 +557,11 @@
 	},
 	"jqHideFull": {
 		"prefix": "jqHideFull",
-		"body": ["$(${selector}).hide(${duration}, function () {", "\t$0", "});"],
+		"body": [
+			"$(${selector}).hide(${duration}, function () {",
+			"\t$0",
+			"});"
+		],
 		"description": "Hide the matched elements."
 	},
 	"jqHover": {
@@ -834,7 +882,11 @@
 	},
 	"jqShowFull": {
 		"prefix": "jqShowFull",
-		"body": ["$(${selector}).show(${duration}, function () {", "\t$0", "});"],
+		"body": [
+			"$(${selector}).show(${duration}, function () {",
+			"\t$0",
+			"});"
+		],
 		"description": "Display the matched elements."
 	},
 	"jqSlideDown": {
@@ -911,7 +963,11 @@
 	},
 	"jqToggleFull": {
 		"prefix": "jqToggleFull",
-		"body": ["$(${selector}).toggle(${duration}, function () {", "\t$0", "});"],
+		"body": [
+			"$(${selector}).toggle(${duration}, function () {",
+			"\t$0",
+			"});"
+		],
 		"description": "Display or hide the matched elements."
 	},
 	"jqToggleSwitch": {
@@ -938,7 +994,9 @@
 	},
 	"jqTriggerWithData": {
 		"prefix": "jqTriggerWithData",
-		"body": ["$(${selector}).trigger(${eventType}, { ${name}: ${value} });"],
+		"body": [
+			"$(${selector}).trigger(${eventType}, { ${name}: ${value} });"
+		],
 		"description": "Execute all handlers and behaviors attached to the matched elements for the given event type."
 	},
 	"jqUnbind": {
