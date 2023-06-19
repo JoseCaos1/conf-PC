@@ -1,0 +1,29 @@
+___________________________________________________________________________
+###########################################################################
+ USO
+################################# INICIO ##################################
+description: COMO USARLO
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#Crear
+conda create --name nombre_env python=nro_version_pythin
+
+#Listar env
+conda env list
+
+#Eliminar env
+conda env remove --name nombre_env
+conda env remove -n nombre_env
+
+#Instalar un package
+conda install nombre_pack
+
+#ver los package instalados
+py list
+
+#Para entrar en un env
+conda activate nombre_env
+
+#Para poder salir
+conda deactivate
+
+############################################################## FIN ########

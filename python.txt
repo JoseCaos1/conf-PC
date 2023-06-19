@@ -1,5 +1,5 @@
 DATO: pyqt6-tools solo sirve en python 3.9, en 3.10 tiene errrores
-verificar: 
+verificar:
 python --version
 pip --version
 
@@ -72,3 +72,8 @@ INSTALAR ENTORNOS VIRTUALES
 -Desactivar
   deactivate
 
+
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+Guia de instalar entorno virtual, y anaconda
+https://www.freecodecamp.org/espanol/news/entornos-virtuales-de-python-explicados-con-ejemplos/
