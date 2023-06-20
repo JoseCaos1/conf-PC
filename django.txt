@@ -1,0 +1,66 @@
+___________________________________________________________________________
+###########################################################################
+ GUIA DE USO
+################################# INICIO ##################################
+description: INSTALACION UBUNTU
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#Cresr una carpeta para empezar
+mkdir django-apps
+cd django-apps
+
+#virtualenv env
+. env/bin/activate #windows
+source bin/activate #ubuntu y estando dentro de env
+
+#install django
+pip install django
+django-admin --version
+
+#Creamos un sitio para configurar
+django-admin startproject nombre_carpeta
+django-admin startproject testsite
+cd testsite
+
+#cuando acabemos de leer, presionamos "q" para salir
+less manage.py
+
+#ingresamos
+cd testsite/
+ls
+
+#CONFIGURAR DJANGO
+#ingresamos
+vim ~/django-apps/testsite/testsite/settings.py
+
+
+#Poner en 'your-server-ip' '127.0.0.1'
+...............................................................
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+# Edit the line below with your server IP address
+ALLOWED_HOSTS = ['your-server-ip']
+...............................................................
+
+#Luego crear una usuario administrativo para django
+python manage.py createsuperuser
+
+
+#ACCEDEMOS A LA APP WEB DE DJANGO
+cd ~/django-apps/testsite/
+
+#Accedemos a el servidor
+#python manage.py runserver 0.0.0.0:8000
+python manage.py runserver 127.0.0.1:8000
+
+
+#EN LA WEB
+http://your-server-ip:8000/
+http://your_server_ip:8000/admin/
+
+
+#Para salir deactivate
+deactivate
+
+
+############################################################## FIN ########
