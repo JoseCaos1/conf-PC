@@ -1,0 +1,162 @@
+___________________________________________________________________________
+###########################################################################
+ DOCKER
+################################# INICIO ##################################
+description: BASICO
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#example pedir una guia de como usar
+#docker container --help
+1. CREAR UNA IMAGE
+docker image pull nombre_image
+
+2. CREAR UN CONTENEDOR
+docker container run nombre_image
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION:CONTAINER
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+/*
+#Ver los container_id activos
+docker container ls -q
+
+#Pasar un parametro $(parametro)
+*/
+
+#PARA VER SI ESTA EN EJECUCION DE UN CONTENEDOR
+docker container ls
+
+#Para ver los q estuvieron en ejecucion
+docker container ls
+
+#Para iniciar nustro contenedor q ya apagamos
+#docker container ls -a
+docker container start contenedor_id
+
+#Para abrir un terminal dentro de nuestro contenedor, se cierra cuando salgamos
+docker container run -it nombre_image
+
+#Para abrir un terminal dentro de nuestro contenedor, se mantiene ejecutando
+docker container run -itd nombre_image
+
+#Para seguir ejecutando en segundo plano
+docker container run -d nombre_image
+
+#attach : abre una terminal pero cuando salimos de la terminal
+#ya no se sigue ejecutando
+docker container attach contenedor_id
+
+#exec : abrir una terminal y poder mandarle opciones
+#executar una terminal en nuestro container y cuando salgamos seguir ejecutando en segundo plano
+docker container exec -it container_id bash
+
+#top: para ver q se esta ejecuntando(proceso) en nuestro contenedor
+docker container top contenedor_id
+
+#stop: detener los contenedores
+docker container stop container_id
+docker container stop $(docker container ls -q) #detener todos los contenedores
+
+#prune:  eliminar todos los contenedores
+docker container prune
+
+#port: direccionar un puerto de docker hacia nuestro localhost
+docker container run -d p 8080:80 nombre_image
+docker container run -d -p 8080:80 nginx
+#para ver lo q se ejecuta en localhost
+curl localhost #curl localhost:80
+
+#port: para ver el lugar donde se ejecuta
+docker container port container_id
+
+#port aleatorio, genera un puerto aleatorio
+docker container run -d -P nombre_image
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: CONTAINER COMMIT
+Crear una imagen nueva
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#copiar el contenedor con el ultimo cambio q tenga en una imagen
+#docker container commit 8b5fa00388e9 ubuntu-copia
+docker container commit container_id nombre_nueva_imagen_propia
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: CONTAINER VOLUME
+Subir nuestro docker al host
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+#create: crear un nuevo volumen
+docker volume create nuevo_volume
+
+#inspect: para ver la caracteristica de nuestro volume
+docker volume inspect nombre_volume
+
+#Crear de mi volume
+#importante es q manrtenda la persistencia de datos
+#docker container run -dit -v nombre_volume:/nombre_a_guardar nombre_image
+
+/* EXAMPLE:
+docker container run -dit -v local:/app ubuntu
+docker exec -it contenedor_id bash
+#nos aparecera una carpeta app la q generamos, dentro creamos archivos
+$cd app
+$touch a
+$touch b
+$touch c
+exit
+#eliminamos el contenedor
+docker container rm -f container_id
+docker volume inspect local
+#dentro de esta carpeta nos aparecera los archivos q creamos en nuestro contenedor
+ls /var/lib/docker/volumes/local/_data
+docker container run -it -v local:/src ubuntu
+*/
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: BUILD
+Crear una herencia de imagenes
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#crear en una carpeta q deseemos heredar
+vi Dockerfile
+#su contenido
+FROM ubuntu:latest
+RUN mkdir app
+RUN cd /app && touch data.txt
+
+#compilar Dockerfile, para ver los cambios, correr la image creada y luego entrar en su terminal
+docker build . -t nombre_image_hererada
+
+#COPIAR ARCHIVOS
+#editar Dockerfile
+FROM ubuntu:latest
+RUN mkdir app
+RUN cd /app && touch data.txt
+COPY ./srcPrueba/data /app/src/com/data
+
+#luego ejecutamos la nueva version de nuestra imagen
+docker build -t ubuntu:v2 .
+
+#AGREGAR ARCHIVOS, DESCOMPRIMIR O BAJAR ARVHIVOS DE LA NUBE
+#luego compilarlo con buil y ver los cambios
+FROM ubuntu:latest
+RUN mkdir app
+RUN cd /app && touch data.txt
+COPY ./srcPrueba/data /app/src/com/data
+ADD file.tar.gz /com/src
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#montar mi volumen guardado en una image
+#docker container run -it -v  local:/src ubuntu
+docker container run -it -v  local:/src ubuntu
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+-rm -it  #crear una terminal y cuando salimos se autodestruira nuestro container
+
+############################################################## FIN ########
+
+
+clase 17 : variables de entorno
