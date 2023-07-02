@@ -1,0 +1,7 @@
+crear macros para office
+
+crea un codigo de VBA para presentaciones en Power Point en la que se muestren la idea de negocio
+
+Crea el texto para que sea entretenido y ameno
+
+Hazlo en 5 diapositivas, la primera sera una introduccion, las 3 siguientes una idea de negocio en cada diapositiva y la ultima un texto para finalizar
