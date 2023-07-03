@@ -73,6 +73,9 @@ docker container port container_id
 #port aleatorio, genera un puerto aleatorio
 docker container run -d -P nombre_image
 
+#variable de entorno, luego ingresar a terminal y ver la variable,#$echo $USER
+docker container run -it -rm -e USER=$USER ubuntu
+
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 DESCRIPTION: CONTAINER COMMIT
@@ -114,6 +117,10 @@ ls /var/lib/docker/volumes/local/_data
 docker container run -it -v local:/src ubuntu
 */
 
+#run, -w crea una carpeta llamada app donde nos ubicara al ejecutar nuestro contenedor
+docker run -w /app -it nombre_image
+
+
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 DESCRIPTION: BUILD
 Crear una herencia de imagenes
@@ -124,6 +131,14 @@ vi Dockerfile
 FROM ubuntu:latest
 RUN mkdir app
 RUN cd /app && touch data.txt
+
+#dockerignore :para ignorar q archivos no deseamos integrar al momento de copiar a nuestra image
+vi .dockerignore
+#su contenido
+./src/a
+./src/b
+./src/*.conf
+
 
 #compilar Dockerfile, para ver los cambios, correr la image creada y luego entrar en su terminal
 docker build . -t nombre_image_hererada
@@ -138,7 +153,7 @@ COPY ./srcPrueba/data /app/src/com/data
 #luego ejecutamos la nueva version de nuestra imagen
 docker build -t ubuntu:v2 .
 
-#AGREGAR ARCHIVOS, DESCOMPRIMIR O BAJAR ARVHIVOS DE LA NUBE
+#ADD: AGREGAR ARCHIVOS, DESCOMPRIMIR O BAJAR ARVHIVOS DE LA NUBE
 #luego compilarlo con buil y ver los cambios
 FROM ubuntu:latest
 RUN mkdir app
@@ -146,6 +161,280 @@ RUN cd /app && touch data.txt
 COPY ./srcPrueba/data /app/src/com/data
 ADD file.tar.gz /com/src
 
+#ENV: AGREGAR UNA VARIABLE DE ENTORNO
+#Agregar env en Dockerfile
+FROM ubuntu:latest
+ENV USER codi
+RUN mkdir app
+RUN cd /app && touch data.txt
+COPY ./srcPrueba/data /app/src/com/data
+
+#ARG : argumentos son reemplazables solo cuando generamos la image
+#crear nuestro argumento en Dockerfile
+ARG DISTRO="ubuntu:18.04"
+FROM ${DISTRO}
+ENV USER codi
+RUN mkdir app
+RUN cd /app && touch data.txt
+COPY ./srcPrueba/data /app/src/com/data
+#luego crear una image
+docker image build -t ubuntu-file:v7       #creamos con nuestro argumento
+docker image build -t ubuntu-file:v7 --build-arg DISTRO=ubuntu:19..4   #creamos con un argumento diferente
+
+#TRABAJAR CON USUARIOS
+#crear al usuario en Dockerfile y dale una accion la cual realizara
+#Al ejecutar la imagen sea con cloud_user
+ARG DISTRO="ubuntu:18.04"
+FROM ${DISTRO}
+RUN useradd -ms /bin/bash cloud_user
+RUN mkdir app
+RUN cd /app && touch data.txt
+COPY ./src /app/src
+USER cloud_user
+RUN cd /home/cloud_user && touch data.txt
+
+#si desamos ingresar con el usuario root en nuestra imagen
+#-u :para darle el usuario y con 0 ingresamos en modo root
+docker container exec -u 0 -it container_id bash
+
+
+#CMD :Darle instrucciones por cmd cuando creemos nuestra imagen
+#vi Dockerfile
+FROM UBUNTU
+CMD ["echo", "Hola mundo"]
+
+#ENTRYPOINT :Es igual q CMD solo q este no lo podemos cambiar a  diferencia del CMD
+FROM UBUNTU
+ENTRYPOINT ["echo", "Hola mundo"]
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: CONTENERIZAR APP
+Example: para poder ejecutar y realizar actividades
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+docker pull node
+#creamos una carpeta app dentro de nuestro container y a la vez
+#vinculamos un volumen en la siguiente direccion,
+docker run --rm -w /app -v /home/jose/container:/app -it node
+docker run --rm -w /app -v /home/jose/container:/app -it node bash #terminal
+docker run --rm -w /app -v /home/jose/container:/app -it node npm init -y #ejecutar json
+docker run --rm -w /app -v /home/jose/container:/app -it node npm install -S express
+#en la carpeta ~/container eliminar node_modules
+sudo rm rf node_modules
+#Dockerfile editamos lo siguiente
+FROM node
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY index.js .
+CMD ["node", "index.js"]
+#creamos la nueva imagen
+docker image build -t web .
+docker run -d -p 3000:3000 web
+#podemos ir al localhost:3000, curl localhost:3000
+
+
+#####SUBIR AL DOCKER HUB
+#activamos las credenciales en docker login
+docker login
+#elegimos la imagen q subiremos
+docker image ls
+#docker tag --help, para renombrar la imagen, example
+#docker tag nombre_image usuario_docker_hub/nuevo_nombre:nro_version
+docker tag web josek159/node_app
+#subimos nuestra imagen al docker hub
+docker push josek159/node_app
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: NETWORK
+usar redes en docker
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#docker network
+
+#inspect
+docker network inspect
+
+#no es nesecario agregarlo por defecto lo agrega a bridge
+docker container run -dit --network bridge ubuntu
+
+#disconnect
+docker network disconnect bridge container_id
+
+#connect
+docker network connect bridge container_id
+
+#example de como vincular al network
+#ten en cuenta q si la creamos con host se expondra nuestros servicios en nuestra pc
+#dentro de nuestra docker terminal ejecutar ifconfig, y en nuestra pc igual para
+#ver q los servicios se ejecutan de la misma manera
+docker run -dit --network none ubuntu  #esta red no tiene internet
+docker run -dit --network host ubuntu  $esta red si tiene ip
+
+
+#CREAR REDES
+#vi Dockerfile
+FROM ubuntu
+RUN apt-get update && apt-get install net-tools iputils-ping -y
+
+#crear la imagen
+docker image build -t ubuntu-tools .
+#create network
+docker network create br0
+docker network ls
+docker network inspect br0
+docker container run -dit --network br0 --name host1 ubuntu-tools
+docker container run -dit --network br0 --name host2 ubuntu-tools
+docker container exec -it host1 bash
+docker container exec -it host2 bash
+#luego de ejecutar los container dentro ejecutar
+ifconfig
+ping 172.18.0.3 #al host contrario para probar si esta conectado
+ping 172.18.0.2 #al host contrario para probar si esta conectado
+#o se puede usar ping con el nomrbe del contenedor
+ping host1
+ping host2
+
+#CREAR UNA NETWORK CON IP ESTATICA
+docker network create --subnet 10.1.0.0/24 --gateway 10.1.0.1 br02
+docker container run -it --ip 10.1.0.10 --network br02 ubuntu-tools
+#verificamos si la ip estatica esta correcta
+ifconfig
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: DOCKER MACHINE
+usar docker en entornos virtuales como amazon AWS, virtual Box ,etc
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#primero instalar docker machine segun la documentacion
+#instalar llave q pide para inicializar
+gpg --generate-key
+#en esta direccion esta la clave gpg .password-store/
+pass init <generated gpg-id public key>
+
+#Elegir un entorno el cual vincularemos nuestro docker machine
+#1ero crear un token en nuestro entorno de digitalocean
+docker-machine create -d digitalocean --digitalocean-access-token=nro_token_digital_ocen nombre_machine_crear
+docker-machine create -d digitalocean --digitalocean-access-token=nro_token_digital_ocen local
+
+#acceder al docker machine
+#docker-machine env nombre_machine
+docker-machine env local
+#nos dara un cliente para vincular a nuestra maquina remota,
+#el cual cambiara de tipo de estado de nuestra maquina a active de - a *
+#eval $(docker-machine env local)
+eval $(docker-machine env local)
+docker-machine ls   #docker image ls :al activarse se limpiara
+                    #nuestras imagenes y hasta q lo desactives
+                    #se crearan imagnes en este entorno
+#empezar desde 0 en el entorno
+docker image pull nginx
+docker container run -d -p 80:80 nginx
+#conectar nuestra ip con docker maquine
+#docker-maquine ip nombre_machine
+docker-maquine ip local     #el resultado sera la ip para entrar y ver en localhost
+
+
+#PARA ENTRAR DENTRO DE NUESTRA MAQUINA VIRTUAL Y VER
+#docker-maquine ssh nombre_machine
+docker-maquine ssh local
+docker ps
+
+
+#ELIMINAR MI DOCKER MACHINE
+#docker-maquine rm nombre_machine
+docker-maquine rm local
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: DOCKER COMPOSE
+sirve para correr muchos contenedores para una app, recomendacion usar un contenedor
+example: un contenedor solo para mysql, un contenedor solo para node, etc
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#docker-compose es similar a docker image
+#instalar y verificar si esta instalado
+docker-compose --version
+
+#en una carpeta crear un archivo docker-compose.yml
+version: "3.7"
+services:
+  nginx:
+    image: nginx
+    ports:
+      - "8080:80"
+#luego correr nuestro archivo
+docker-compose up
+docker-compose up -d  #en segundo plano
+#para lo docker-compose creados
+docker-compose ps
+
+#down :eliminar un docker-compose
+docker-compose down
+
+#crearemos 2 contenedores y lo correremos
+#docker-compose.yml
+version: "3.7"
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - "8080:80"
+  mysql:
+    image: mysql
+    container_name: mysql
+#corremos nuestro archivo
+docker-compose up -d
+docker-compose ps
+#veremos q mysql esta detenido verificar con un logs
+docker-compose logs mysql
+/*
+#error q nos muestra por el cual no se ejecuta
+mysql    |     You need to specify one of the following as an environment variable:
+mysql    |     - MYSQL_ROOT_PASSWORD
+mysql    |     - MYSQL_ALLOW_EMPTY_PASSWORD
+mysql    |     - MYSQL_RANDOM_ROOT_PASSWORD
+*/
+
+#corregimos nuestro archivo docker-compose.yml
+version: "3.7"
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - "8080:80"
+  mysql:
+    image: mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+#volvemos a ejecutar
+docker-compose up -d
+docker-compose ps
+
+#.ENV =entorno de app
+#crearemos un archivo .env en donde estara informacion sencible
+#.env   #a la altura de docker-compose.yml
+MYSQL_ROOT_PASSWORD= root
+#docker-compose.yml
+version: "3.7"
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - "8080:80"
+  mysql:
+    image: mysql
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+#docker-compose up -d
+
+
+#REDES EN DOCKER-COMPOSE
+docker network inspect compose_default
 
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -154,9 +443,10 @@ ADD file.tar.gz /com/src
 docker container run -it -v  local:/src ubuntu
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
--rm -it  #crear una terminal y cuando salimos se autodestruira nuestro container
+-it --rm  #crear una terminal y cuando salimos se autodestruira nuestro container
 
 ############################################################## FIN ########
 
 
 clase 17 : variables de entorno
+
