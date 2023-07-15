@@ -18,7 +18,8 @@ conda env remove -n nombre_env
 conda install nombre_pack
 
 #ver los package instalados
-py list
+#py list
+pip list
 
 #Para entrar en un env
 conda activate nombre_env
