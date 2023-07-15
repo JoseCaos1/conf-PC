@@ -436,6 +436,73 @@ services:
 #REDES EN DOCKER-COMPOSE
 docker network inspect compose_default
 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: DOCKER SWARM
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#primero crearemos el archivo /etc/vbox/networks.conf
+* 0.0.0.0/0 ::/0
+#luego crearemos nuestro docker-machine con virtual-box
+docker-machine create --driver virtualbox worker1
+docker-machine create --driver virtualbox worker2
+docker-machine create --driver virtualbox manager1
+#veremos el docker-machine creadps
+docker-machine ls
+#ingresamos a un manager1
+docker-machine ssh manager1
+#copiamos su ip q nos muestra en docker-machine ls
+docker swarm init --advertise-addr 192.168.99.102
+/* #nos dejara este codigo
+docker swarm join --token SWMTKN-1-0jnwkklyv5gfq46omz8ic67lwu3e78iwugjzhd6v6j1otbdcut-29q5dxf13vykq6knc6pjoi4g9 192.168.99.102:2377
+*/
+#salimos y entramos a worker1
+docker-machine ssh worker1
+#agregamos el nodo a manager,pegamos el codigo de manager1
+docker swarm join --token SWMTKN-1-0jnwkklyv5gfq46omz8ic67lwu3e78iwugjzhd6v6j1otbdcut-29q5dxf13vykq6knc6pjoi4g9 192.168.99.102:2377
+#salimos y entramos a worker2
+docker-machine ssh worker2
+#agregamos el nodo a manager,pegamos el codigo de manager1
+docker swarm join --token SWMTKN-1-0jnwkklyv5gfq46omz8ic67lwu3e78iwugjzhd6v6j1otbdcut-29q5dxf13vykq6knc6pjoi4g9 192.168.99.102:2377
+#salimos y entramos a manager1
+docker-machine ssh manager1
+#para ver los nodos agregados
+docker node ls
+
+
+#DEPLOY SERVICIO
+#ingresamos a manager1
+docker-machine ssh manager1
+#dentro crearemos un contenedor redis
+docker service create --replicas 1 --name redis redis:4
+#ver los servicios
+docker service ls
+docker service inspect --pretty redis
+
+#eliminar service
+docker rm nombre_servicio
+
+
+#DOCKER SWARM ACTUALIZAR PUERTOS
+#creamos una imagen dentro de nuestro machine manager
+docker-machine ssh manager1
+docker service create --replicas 1 --name nginx nginx
+#ver las caracteristica de nuestro puerto
+docker service ps nginx
+
+#Nos vamos a otra terminal
+docker-machine ls
+#luego copio el ip de worker1 y me voy a localhost a ejecutarlo
+#vamos al manager es el q controla
+docker-machine ssh manager1
+#enviamos los puertos para q se ejecute
+docker service update --publish-add 8080:8080 nginx
+#docker service ps nginx
+
+#salimos e ingresamos a worker1
+docker-machine ssh worker1
+docker ps
+#ingresamos al localhost y ya debe de funcionar
+192.168.99.100
+
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #montar mi volumen guardado en una image
@@ -449,4 +516,10 @@ docker container run -it -v  local:/src ubuntu
 
 
 clase 17 : variables de entorno
+
+
+https://codigofacilito.com/videos/docker-swarm-actualizar-puertos
+Clase 40
+Docker swarm actualizar puertos
+
 
