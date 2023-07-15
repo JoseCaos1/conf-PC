@@ -1,0 +1,18 @@
+Curso Link:
+https://drive.google.com/drive/u/0/folders/1_yvLR4dIv2dTTZsrJ2xlbNhDQzGySzWG?fbclid=IwAR0_ghh3iR0AEMTR-pr9GpK-5nhx1zcw3SIlyGdruzkLb1oIHwmbRdRPxrI
+
+Video: 6. Mediante Vulnerabilidades de Kernel.mp4
+
+5 FASES DE PENTESTING
+
+1ER FASE:
+reconocimiento de nuestra victima
+2DA FASE:
+enumeramos usuarios e informacion
+3ER FASE:
+analisis de vulnerabilidades
+4TA FASE:
+explotacion del sistema(ganar el acceso a la maquina)
+5TA FASE: POS-EXPLOTACION
+escaladar privilegio del sistema(root)
+
