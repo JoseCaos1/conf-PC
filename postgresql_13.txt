@@ -214,3 +214,21 @@ sudo systemctl status apache2
 ############################################################## FIN ########
 
 contraseña master: vasquez
+
+
+
+##################################
+##################################
+##################################
+##################################
+##################################
+PostgreSQL dowload
+1- seguir la GUIA, luego ingresar
+sudo -i -u postgres
+psql
+#creamos una contraseña para el usuario de postgres
+postgres=# \password postgres
+
+2-Instalamos el pgadmin4 en el escritorio
+#INgremos el usuario: postgres, password: vasquez
+
