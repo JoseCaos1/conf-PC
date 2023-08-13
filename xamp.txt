@@ -61,3 +61,5 @@ browser-sync start --proxy "localhost" --files "*.php"
 #browser-sync start --proxy localhost/Nombre_Carpeta "index.php"
 browser-sync start --proxy localhost/ "index.php"
 -------------------------------------
+
+http://localhost/phpmyadmin/
