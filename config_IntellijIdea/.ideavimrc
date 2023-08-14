@@ -1,0 +1,92 @@
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+"TODO: CONFIGURATION GENERAL
+autocmd BufWritePre * :%s/\s\+$//e
+set noswapfile
+syntax on
+set mouse=a
+set sw=2 sts=2
+set number
+set smart-indent
+set rnu
+set numbered=1
+set nowrap
+set show match
+set incsearch
+set ignorecase
+set clipboard=unnamed plus
+set encoding=UTF-8
+set relativenumber
+set showcmd
+set ruler
+set last-status=2
+set smartcase
+set hlsearch
+set tabs top=2
+set shift-width=2
+filetype plugin indent on
+set color-column=80
+set incsearch
+
+"set foldmethod=syntax
+set fold-method=syntax
+set nonenforceable
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+"PLUGIN
+Plug 'easymotion/vim-easymotion'
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-commentary'
+Plug 'preservim/nerdtree'
+Plug 'terryma/vim-multiple-cursors'
+
+
+"TODO: CONFIOGURACIONES MAPLEADER
+let mapleader=","
+
+"SPLIT RESIZE
+nnoremap <Leader>> 10<C-w>>
+nnoremap <Leader>< 10<C-w><
+
+"Colocar ; al final
+nnoremap <Leader>; $a;<Esc>
+
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :q<CR>
+
+noremap <Leader>k :next<CR>
+
+"FZF
+map <Leader>p :Files<CR>
+map <Leader>l :Lines<CR>
+map <Leader>ll :BLines<CR>
+map <Leader>m :Marks<CR>
+map <Leader>b :Buffers<cr>
+map <Leader>bb :Windows<cr>
+
+nnoremap <Leader>k :bnext<CR>
+nnoremap <Leader>j :bprevious<CR>
+nnoremap <Leader>x :bdelete<CR>
+nnoremap <Leader>y "+y<CR>
+"termninal emulation
+vnoremap <c-t> :split<CR>:ter<CR>:resize 10<CR>
+nnoremap <c-t> :split<CR>:ter<CR>:resize 10<CR>
+"Spli
+nnoremap <Leader>v :vsp<CR>
+nnoremap <Leader>s :sp<CR>
+
+"Para q las feclas no funcionen
+noremap <up> <nop>
+noremap <down> <nop>
+noremap <left> <nop>
+noremap <right> <nop>
+"Eliminar los comentarios de un archivo
+nnoremap <Leader>d :g/^\s*#/d<CR>
+
+"Buscamos con 2 letras un palabra en nuestro archivo
+nmap <Leader>u <Plug>(easymotion-w)
