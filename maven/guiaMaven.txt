@@ -1,7 +1,10 @@
 ___________________________________________________________________________
 ###########################################################################
- CREAR UN PROYECTO JAVA
+ CREAR UN PROYECTOS JAVA EN MAVEN
 ################################# INICIO ##################################
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: JAVA EN MAVEN
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #EJECUTAR EL CODIGO PARA CREAR UN PROYECT JAVA, CAMBIAR EL NOMBRE DARTIFACTID
  mvn archetype:generate \
     -DgroupId=com.proyect \
@@ -55,4 +58,21 @@ mvn exec:java
     </build>
 </project>
 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+DESCRIPTION: JAVAFX EN MAVEN
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#creamos en maven cambiar lo q esta entre las comillas y eliminar las comillas
+mvn archetype:generate \
+        -DarchetypeGroupId="com.micarpeta" \
+        -DarchetypeArtifactId=javafx-archetype-simple \
+        -DarchetypeVersion=0.0.3 \
+        -DgroupId="com.micarpeta" \
+        -DartifactId="nombreProyect" \
+        -Dversion=1.0.0 \
+        -Djavafx-version=17
+
+#luego de crear eliminar module.info, tambien verificar el App.main y el pom.xml
+#launch(args)
+
 ############################################################## FIN ########
+
