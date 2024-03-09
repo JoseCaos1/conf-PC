@@ -63,10 +63,10 @@ DESCRIPTION: JAVAFX EN MAVEN
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #creamos en maven cambiar lo q esta entre las comillas y eliminar las comillas
 mvn archetype:generate \
-        -DarchetypeGroupId="com.micarpeta" \
+        -DarchetypeGroupId=org.openjfx \
         -DarchetypeArtifactId=javafx-archetype-simple \
         -DarchetypeVersion=0.0.3 \
-        -DgroupId="com.micarpeta" \
+        -DgroupId=com \
         -DartifactId="nombreProyect" \
         -Dversion=1.0.0 \
         -Djavafx-version=17
