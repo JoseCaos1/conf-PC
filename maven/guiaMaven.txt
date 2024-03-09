@@ -73,6 +73,7 @@ mvn archetype:generate \
 
 #luego de crear eliminar module.info, tambien verificar el App.main y el pom.xml
 #launch(args)
-
+#Ejecutamos para correr el programa
+mvn clean javafx:run
 ############################################################## FIN ########
 
