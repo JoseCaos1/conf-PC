@@ -1,0 +1,58 @@
+___________________________________________________________________________
+###########################################################################
+ CREAR UN PROYECTO JAVA
+################################# INICIO ##################################
+#EJECUTAR EL CODIGO PARA CREAR UN PROYECT JAVA, CAMBIAR EL NOMBRE DARTIFACTID
+ mvn archetype:generate \
+    -DgroupId=com.proyect \
+    -DartifactId=mi-nuevo-proyecto \
+    -DarchetypeArtifactId=maven-archetype-quickstart \
+    -DinteractiveMode=false
+
+#EJECUTAR CODIGO:
+mvn clean
+mvn compile
+mvn exec:java
+
+#POML.XML:
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.proyect</groupId>
+    <artifactId>my-app</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <!-- Aquí puedes agregar las dependencias que necesites para tu proyecto -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Configuración del plugin exec-maven-plugin -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.proyect.app.App</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
+############################################################## FIN ########

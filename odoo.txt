@@ -29,5 +29,12 @@ Password: admin
 Phone Number:
 Demo data: check buenita xd
 
-
 ############################################################## FIN ########
+
+DATOS DE LA PRIMERA CREACION ACTUAL:
+Master Password: 2pd4-z469-chgh
+Database Name: odoo
+Email: caoss2022@gmail.com
+Password: odoo
+Phone Number: 928332120
+Demo data: check buenita xd

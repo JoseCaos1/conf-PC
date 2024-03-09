@@ -16,7 +16,7 @@ java --version
 javac --version
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 DESCRIPTION: CONFIGURAR AND INSTALL JDK 8
-1- Download jdk 8, descomprimir 
+1- Download jdk 8, descomprimir
 tar -xzvf jdk_8.tar.gz
 
 2- Mover la carpeta a /opt/
@@ -69,7 +69,7 @@ sudo chmod +x /etc/profile.d/java.sh
 DESCRIPTION: INSTALL MAVEN
 GUIA: https://linuxize.com/post/how-to-install-apache-maven-on-ubuntu-20-04/
 
-1-  Descargar maven de su pagina oficial la extension, 
+1-  Descargar maven de su pagina oficial la extension,
     Buscamos: maven2 dowload y descargamos apache-maven-3.8.5-bin.tar.gz
 
 2- sudo tar xf ~/Downloads/apache-maven-3.8.5-bin.tar.gz -C /opt
@@ -95,7 +95,7 @@ export PATH=${M2_HOME}/bin:${PATH}
 7- Agregamos en ~/.profile
 alias maven='source /etc/profile.d/maven.sh && mvn -version'
 
-/* 
+/*
 DATO: siempre hay q source para q funcione, por esto agregamos al .profile
 source /etc/profile.d/maven.sh
 mvn -version
@@ -137,13 +137,13 @@ EjemploMaven
 +---pom.xml
 
 # COMPILAR
-#Una vez que tenemos todo, podemos compiliar de forma sencilla. 
+#Una vez que tenemos todo, podemos compiliar de forma sencilla.
 #Basta ponerse en el directorio donde está el fichero pom.xml y escribir
 $ mvn compile
 
 #GENERAR JAR
 $ mvn package
-#Esto primero compilará si es necesario, pasará las clases de test de JUnit 
+#Esto primero compilará si es necesario, pasará las clases de test de JUnit
 #y si no hay fallos, meterá en el directorio target nuestro jar,
 #que por defecto tendrá un nombre tan feo como este
 EjemploMaven-1.0-SNAPSHOT.jar
@@ -192,4 +192,17 @@ $ mvn install
 
 
 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+EXTRA: ERROR CON NVIM NO RECONOCE A JAVA
+FORO: https://github.com/neoclide/coc-java/issues/12
+Entonces rm -rf ~/.config/coc/extensions/coc-java-data/*luego lanza nvimen el directorio raíz de mi proyecto y abra un archivo java arbitrario del proyecto. Primero, coc.nvim mostró el mensaje jdt.ls no encontrado, se está descargando, seguido del mensaje de inicio del servidor de lenguaje Java y finalmente se inició.
+
+EXTRA 2:
+https://github.com/neoclide/coc-java/issues/145
+#problemilla de otro
+Tuve el mismo problema, creo que el hecho de que todavía estaba usando Java 8 causó el problema. El archivo de registro bajo .config/coc/extensions/coc-java-data/server/config_linux/líneas contenidas como: Unresolved requirement: Require-Capability: osgi.ee; filter:="(&(osgi.ee=JavaSE)(version=11))".
+Para solucionarlo, simplemente configuré el inicio de Java en una instalación de Java 11:
+
+    Abra el archivo de configuración con :CocConfig
+    Configure java.home agregando esta línea: "java.home": "[PATH TO JAVA 11]". En ubuntu es "java.home": "/usr/lib/jvm/java-11-openjdk-amd64/"
 ############################################################## FIN ########

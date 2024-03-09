@@ -231,3 +231,8 @@ postgres=# \password postgres
 
 2-Instalamos el pgadmin4 en el escritorio
 #Ingremos el usuario: postgres, password: vasquez
+
+
+
+#Dato extra WEB PostgreSQL
+caoss2022@gmail.com segundoplan321
